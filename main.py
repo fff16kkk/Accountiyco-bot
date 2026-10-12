@@ -2,10 +2,11 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from config import BOT_TOKEN
+from config import BOT_TOKEN, PROXY_URL
 from database import init_db
 from handlers import user_router, admin_router
 
@@ -22,8 +23,13 @@ async def main():
     await init_db()
     logger.info("✅ دیتابیس آماده شد.")
 
+    session = AiohttpSession(proxy=PROXY_URL) if PROXY_URL else None
+    if PROXY_URL:
+        logger.info(f"🌐 اتصال از طریق پروکسی: {PROXY_URL}")
+
     bot = Bot(
         token=BOT_TOKEN,
+        session=session,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = Dispatcher(storage=MemoryStorage())
