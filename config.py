@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# توکن ربات رو اینجا بذار (یا در فایل .env)
-BOT_TOKEN = "7881335341:AAGBmLGyL_vWKA9mbC9kVOcNNPRGCCNzfUI"
+# توکن ربات از فایل .env خونده میشه (BOT_TOKEN=...)
+BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 
 # آیدی عددی ادمین‌ها (می‌تونی چندتا اضافه کنی)
 ADMIN_IDS = [82502565]
